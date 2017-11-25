@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="coffeeApp">
+<head>
+    <title>Trish's Coffee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div ng-controller="CoffeeShopController" class="container">
+    <div class="panel panel-default" ng-show="nearestCoffeeShop">
+        <div class="panel-body">
+            Your coffee will be ready for pick up at: <strong> {{nearestCoffeeShop.name}} </strong>
+<a ng-href="https://maps.google.com/maps/place/@{{nearestCoffeeShop.location.coordinates[1]}},{{nearestCoffeeShop.location.coordinates[0]}},19z">Map</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div ng-controller="DrinksController">
+        <alert ng-repeat="message in messages" type="message.type" close="closeAlert($index)">
+            {{message.msg}}
+            <div ng-show="message.orderId">
+                <a ng-href="/service/coffeeshop/{{coffeeShopId}}/order/{{message.orderId}}">Order details</a>
+            </div>
+        </alert>
+
+        <form class="CoffeeForm" role="form" ng-submit="giveMeCoffee()">
+            <div class="form-group">
+                <label for="drink.type" class="control-label">Drink</label>
+                <select ng-model="drink.type" ng-options="type.name for type in types | orderBy:'name'" ng-required="true"
+                        class="form-control"> </select>
+            </div>
+            <div class="form-group">
+                <label for="drink.size" class="control-label">Size</label>
+                <select ng-model="drink.size" ng-options="size for size in sizes" ng-required="true"
+                        class="form-control"> </select>
+            </div>
+
+            <div class="form-group" ng-show="drink.type && drink.size">
+                <label for="newOption" class="control-label">Options</label>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input type="text" ng-model="newOption"
+                               typeahead="availableOption.name for availableOption in availableOptions | filter:$viewValue | orderBy:'name'"
+                               typeahead-on-select="addOption()"
+                               class="form-control" placeholder="Type milk or syrups or extras here">
+                    </div>
+
+                    <div class="col-xs-1">
+                        <input type="button" class="btn btn-default" ng-click="addOption()" value="add"></input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p><span ng-repeat="selectedOption in drink.selectedOptions"> {{selectedOption}};</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-show="drink.type && drink.size">
+                <label for="drink.drinker" class="control-label">Your Name</label>
+                <input type="text" ng-model="drink.drinker" class="form-control" required="true">
+            </div>
+            <div class="form-group" ng-show="drink.type && drink.size">
+                <!--<submit type="button" class="btn btn-default btn-lg" ng-click="giveMeCoffee()">Give Me Coffee!!</submit>-->
+                <input type="submit" class="btn btn-default btn-lg" value="Give Me Coffee!!"></input>
+            </div>
+        </form>
+        <pre>{{drink | json}}</pre>
+    </div>
+
+</div>
+
+
+<script src="js/angular.min.js"></script>
+<script src="js/angular-resource.min.js"></script>
+<script src="js/coffee.js"></script>
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/ui-bootstrap-tpls-0.10.0.min.js"></script>
+
+</body>
+</html>

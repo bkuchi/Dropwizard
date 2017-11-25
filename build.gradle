@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.yammer.dropwizard:dropwizard-core:0.6.2'
+    compile 'org.mongodb.morphia:morphia:0.108'
+    compile 'org.codehaus.groovy:groovy-all:2.3.4'
+
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'cglib:cglib-nodep:3.1'
+    testCompile 'org.objenesis:objenesis:2.1'
+    testCompile 'org.codehaus.groovy:groovy-all:2.3.4'
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': 'Coffeeeee',
+                   'Implementation-Version': 0.1,
+                   'Main-Class': 'com.mechanitis.demo.coffee.CoffeeShopService')
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}

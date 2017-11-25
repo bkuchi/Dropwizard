@@ -1,0 +1,7 @@
+http:
+  rootPath: /service/*
+
+logging:
+  level: DEBUG
+
+assetsPath: /html/

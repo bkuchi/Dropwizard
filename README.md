@@ -4,10 +4,10 @@
   
 [![DropWizard](http://techbus.safaribooksonline.com/static/201711-8221-techbus/images/9780134070872/9780134070872_s.jpg)]
 
-#Stack 
+# Stack  
 Angular, HTML5, JavaScript, Bootstrap,  Java, Dropwizard, MongoDB, Groovy, Gradle
 
-#How to get up and running with this application
+# How to get up and running with this application  
 
 	Install Mongodb with Default Configurations,  start the database.
  
